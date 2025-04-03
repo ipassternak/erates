@@ -1,0 +1,16 @@
+name: erates
+
+services:
+
+  app:
+    container_name: erates_app
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - DATABASE_URL=sqlite:///./app/db/app.db
+      - SECRET_KEY=your_secret_key
+      - TOKEN_EXPIRE_MINUTES=60
+      - PORT=8000
+    ports:
+      - "8000:8000"
