@@ -1,9 +1,10 @@
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import "./App.css";
 import { HomePage } from "./pages/home";
+import { AccountPage } from "./pages/account";
+import { LoginPage } from "./pages/login";
+import { RegisterPage } from "./pages/register";
 
-// Create your page components (these are just examples - create your actual pages)
-const AboutPage = () => <div className="mainContent">About Content</div>;
 const ContactPage = () => <div className="mainContent">Contact Content</div>;
 const TransactionsPage = () => (
   <div className="mainContent">Transactions Content</div>
@@ -13,7 +14,7 @@ function App() {
   const drawerButtons = [
     { name: "E-Rates", path: "/" },
     { name: "Account", path: "/account" },
-    { name: "Contact", path: "/contact" },
+    { name: "Wallets", path: "/wallets" },
     { name: "Transactions", path: "/transactions" },
   ];
 
@@ -30,9 +31,12 @@ function App() {
         <div className="mainContent">
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/account" element={<AboutPage />} />
-            <Route path="/contact" element={<ContactPage />} />
+            <Route path="/account" element={<AccountPage />} />
+            <Route path="/wallets" element={<ContactPage />} />
             <Route path="/transactions" element={<TransactionsPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route path="*" element={<div>404</div>} />
           </Routes>
         </div>
       </div>
