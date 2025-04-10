@@ -4,11 +4,8 @@ import { HomePage } from "./pages/home";
 import { AccountPage } from "./pages/account";
 import { LoginPage } from "./pages/login";
 import { RegisterPage } from "./pages/register";
-
-const ContactPage = () => <div className="mainContent">Contact Content</div>;
-const TransactionsPage = () => (
-  <div className="mainContent">Transactions Content</div>
-);
+import { WalletsPage } from "./pages/wallets";
+import { TransactionsPage } from "./pages/transactions";
 
 function App() {
   const drawerButtons = [
@@ -32,7 +29,7 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/account" element={<AccountPage />} />
-            <Route path="/wallets" element={<ContactPage />} />
+            <Route path="/wallets" element={<WalletsPage />} />
             <Route path="/transactions" element={<TransactionsPage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
