@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import DOMPurify from "dompurify";
-import { Button, Form, Input, Modal, Select } from "antd";
+import { Button, Form, InputNumber, Modal, Select } from "antd";
 
 const mockedOptions = [
   {
@@ -17,11 +17,17 @@ const mockedOptions = [
   },
 ];
 
+interface TransactionFormValues {
+  exchangeRate: number;
+  fromWallet: string;
+  toWallet: string;
+  amount: number;
+}
+
 export const TransactionsPage = () => {
   const [htmlContent, setHtmlContent] = useState("");
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
-  const [exchangeRate, setExchangeRate] = useState<number>(1);
 
   useEffect(() => {
     fetch("/transactions")
@@ -46,26 +52,37 @@ export const TransactionsPage = () => {
         footer={null}
         onClose={() => setOpen(false)}
       >
-        <Form layout="vertical" onFinish={(values) => console.log(values)}>
-          <Form.Item label="Exchange Rate">
-            <Input type="number" placeholder="Exchange Rate" />
+        <Form<TransactionFormValues>
+          layout="vertical"
+          onFinish={(values) => console.log(values)}
+        >
+          <Form.Item<TransactionFormValues>
+            label="Exchange Rate"
+            name="exchangeRate"
+          >
+            <InputNumber type="number" placeholder="Exchange Rate" />
           </Form.Item>
 
-          <Form.Item label="From Wallet">
+          <Form.Item<TransactionFormValues>
+            label="From Wallet"
+            name="fromWallet"
+          >
             <Select options={mockedOptions} />
           </Form.Item>
 
-          <Form.Item label="To Wallet">
+          <Form.Item<TransactionFormValues> label="To Wallet" name="toWallet">
             <Select options={mockedOptions} />
           </Form.Item>
 
-          <Form.Item label="Amount">
-            <Input type="number" placeholder="Amount" />
+          <Form.Item<TransactionFormValues> label="Amount" name="amount">
+            <InputNumber type="number" placeholder="Amount" />
           </Form.Item>
 
-          <Button type="primary" htmlType="submit">
-            Transfer
-          </Button>
+          <Form.Item label={null}>
+            <Button type="primary" htmlType="submit">
+              Transfer
+            </Button>
+          </Form.Item>
         </Form>
       </Modal>
     </>
