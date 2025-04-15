@@ -1,21 +1,7 @@
 import { useEffect, useState } from "react";
 import DOMPurify from "dompurify";
 import { Button, Form, InputNumber, Modal, Select } from "antd";
-
-const mockedOptions = [
-  {
-    label: "USD",
-    value: "USD",
-  },
-  {
-    label: "EUR",
-    value: "EUR",
-  },
-  {
-    label: "UAH",
-    value: "UAH",
-  },
-];
+import { currencyOptions } from "../const";
 
 interface TransactionFormValues {
   exchangeRate: number;
@@ -51,6 +37,7 @@ export const TransactionsPage = () => {
         open={open}
         footer={null}
         onClose={() => setOpen(false)}
+        onCancel={() => setOpen(false)}
       >
         <Form<TransactionFormValues>
           layout="vertical"
@@ -59,6 +46,7 @@ export const TransactionsPage = () => {
           <Form.Item<TransactionFormValues>
             label="Exchange Rate"
             name="exchangeRate"
+            rules={[{ required: true }]}
           >
             <InputNumber type="number" placeholder="Exchange Rate" />
           </Form.Item>
@@ -66,15 +54,24 @@ export const TransactionsPage = () => {
           <Form.Item<TransactionFormValues>
             label="From Wallet"
             name="fromWallet"
+            rules={[{ required: true }]}
           >
-            <Select options={mockedOptions} />
+            <Select options={currencyOptions} />
           </Form.Item>
 
-          <Form.Item<TransactionFormValues> label="To Wallet" name="toWallet">
-            <Select options={mockedOptions} />
+          <Form.Item<TransactionFormValues>
+            label="To Wallet"
+            name="toWallet"
+            rules={[{ required: true }]}
+          >
+            <Select options={currencyOptions} />
           </Form.Item>
 
-          <Form.Item<TransactionFormValues> label="Amount" name="amount">
+          <Form.Item<TransactionFormValues>
+            label="Amount"
+            name="amount"
+            rules={[{ required: true }]}
+          >
             <InputNumber type="number" placeholder="Amount" />
           </Form.Item>
 
