@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Exchange Rates</title>
+    <title>Transaction History</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -42,23 +42,35 @@
     </style>
 </head>
 <body>
-    <h1>Exchange Rates</h1>
+    <h1>Transaction History</h1>
     <table>
         <thead>
             <tr>
+                <th>ID</th>
+                <th>From Wallet</th>
+                <th>To Wallet</th>
+                <th>Exchange Rate ID</th>
                 <th>From Currency</th>
+                <th>From Amount</th>
                 <th>To Currency</th>
-                <th>Rate</th>
-                <th>Last Updated</th>
+                <th>To Amount</th>
+                <th>Created At</th>
+                <th>Updated At</th>
             </tr>
         </thead>
         <tbody>
-            {% for rate in exchange_rates %}
+            {% for transaction in transactions %}
             <tr>
-                <td>{{ rate.from_currency }}</td>
-                <td>{{ rate.to_currency }}</td>
-                <td class="rate">{{ rate.rate }}</td>
-                <td>{{ rate.updated_at }}</td>
+                <td>{{ transaction.id }}</td>
+                <td>{{ transaction.from_wallet_id }}</td>
+                <td>{{ transaction.to_wallet_id }}</td>
+                <td>{{ transaction.exchange_rate_id }}</td>
+                <td>{{ transaction.from_currency }}</td>
+                <td class="amount">{{ transaction.from_amount }}</td>
+                <td>{{ transaction.to_currency }}</td>
+                <td class="amount">{{ transaction.to_amount }}</td>
+                <td>{{ transaction.created_at }}</td>
+                <td>{{ transaction.updated_at }}</td>
             </tr>
             {% endfor %}
         </tbody>

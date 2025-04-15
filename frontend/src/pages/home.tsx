@@ -7,7 +7,10 @@ export const HomePage = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    fetch(`${API_URL}/exchange-rate/list`)
+    fetch(`${API_URL}/exchange-rate/list`, {
+      method: "GET",
+      credentials: "include",
+    })
       .then((response) => response.text())
       .then((data) => setHtmlPage(data))
       .catch((error) => console.error(error))

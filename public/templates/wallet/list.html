@@ -1,13 +1,44 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Wallets</title>
+    <meta charset="UTF-8">
+    <title>My Wallets</title>
     <style>
-        body { font-family: Arial, sans-serif; margin: 20px; }
-        table { border-collapse: collapse; width: 100%; max-width: 800px; }
-        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-        th { background-color: #f2f2f2; }
-        tr:nth-child(even) { background-color: #f9f9f9; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 20px;
+            color: #333;
+        }
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            max-width: 800px;
+            box-shadow: 0 2px 3px rgba(0,0,0,0.1);
+        }
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px 15px;
+            text-align: left;
+        }
+        th {
+            background-color: #3498db;
+            color: white;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+        tr:hover {
+            background-color: #e9f7fe;
+        }
+        .rate {
+            font-weight: bold;
+            color: #27ae60;
+        }
     </style>
 </head>
 <body>
@@ -25,9 +56,9 @@
             {% for wallet in wallets %}
             <tr>
                 <td>{{ wallet.name }}</td>
-                <td>{{ wallet.currency.value }}</td>
+                <td>{{ wallet.currency }}</td>
                 <td>{{ wallet.balance }}</td>
-                <td>{{ wallet.created_at.isoformat() }}</td>
+                <td>{{ wallet.created_at }}</td>
             </tr>
             {% endfor %}
         </tbody>

@@ -20,7 +20,14 @@ def get_list(
     exchange_rates = exchange_rate_service.get_list(db, params)
     return templates.TemplateResponse("exchange-rate/list.html", {
         "request": request,
-        "exchange_rates": exchange_rates
+        "exchange_rates": list(map(lambda exchange_rate: {
+            "id": exchange_rate.id,
+            "from_currency": exchange_rate.from_currency.value,
+            "to_currency": exchange_rate.to_currency.value,
+            "rate": exchange_rate.rate,
+            "created_at": exchange_rate.created_at.strftime("%d/%m/%Y %H:%M"),
+            "updated_at": exchange_rate.updated_at.strftime("%d/%m/%Y %H:%M"),
+        }, exchange_rates)),
     })
 
 @exchange_rate_router.get("/item/{id}")

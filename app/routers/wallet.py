@@ -21,7 +21,14 @@ def get_list(
     wallets = wallet_service.get_list(db, params, decoded_token)
     return templates.TemplateResponse("wallet/list.html", {
         "request": request,
-        "wallets": wallets
+        "wallets": list(map(lambda wallet: {
+            "id": wallet.id,
+            "name": wallet.name,
+            "currency": wallet.currency.value,
+            "balance": wallet.balance,
+            "created_at": wallet.created_at.strftime("%d/%m/%Y %H:%M"),
+            "updated_at": wallet.updated_at.strftime("%d/%m/%Y %H:%M"),
+        }, wallets)),
     })
 
 @wallet_router.get("/item/{id}")

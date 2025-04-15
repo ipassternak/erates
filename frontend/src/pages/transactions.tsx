@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import DOMPurify from "dompurify";
 import { Button, Form, InputNumber, Modal, Select } from "antd";
-import { currencyOptions } from "../const";
+import { API_URL, currencyOptions } from "../const";
 
 interface TransactionFormValues {
   exchangeRate: number;
@@ -16,7 +16,10 @@ export const TransactionsPage = () => {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    fetch("/transactions")
+    fetch(`${API_URL}/transactions/list`, {
+      method: "GET",
+      credentials: "include",
+    })
       .then((response) => response.text())
       .then((html) => {
         setHtmlContent(DOMPurify.sanitize(html));

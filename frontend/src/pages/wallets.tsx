@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import DOMPurify from "dompurify";
 import { Button, Form, Input, Modal, Select } from "antd";
-import { currencyOptions } from "../const";
+import { API_URL, currencyOptions } from "../const";
 
 interface WalletFormValues {
   name: string;
