@@ -14,7 +14,10 @@ export const WalletsPage = () => {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    fetch("/wallets/list")
+    fetch(`${API_URL}/wallets/list`, {
+      method: "GET",
+      credentials: "include",
+    })
       .then((response) => response.text())
       .then((html) => {
         setHtmlContent(DOMPurify.sanitize(html));

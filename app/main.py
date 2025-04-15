@@ -13,9 +13,9 @@ Base.metadata.create_all(bind=engine)
 app = FastAPI(title="Exchange Rate API", version="0.0.1")
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:8000"],
+    allow_origins=["http://localhost:5173"],
     allow_credentials=True,
-    allow_methods=["*"],
+    allow_methods=["GET", "POST", "PUT", "DELETE", "OPTIONS"],
 )
 app.include_router(auth_router)
 app.include_router(exchange_rate_router)

@@ -33,10 +33,10 @@ def login(
         key="token",
         value=token,
         httponly=True,
-        secure=False,
-        samesite="Strict",
         path="/",
-        expires=TOKEN_EXPIRE_MINUTES * 60,
+        samesite="Lax",
+        secure=False,
+        max_age=TOKEN_EXPIRE_MINUTES * 60,
     )
     return response
 

@@ -1,10 +1,20 @@
-{% for rate in exchange_rates %}
-  <tr>
-    <td>{{ rate.id }}</td>
-    <td>{{ rate.from_currency.value }}</td>
-    <td>{{ rate.to_currency.value }}</td>
-    <td>{{ rate.rate }}</td>
-    <td>{{ rate.created_at.isoformat() }}</td>
-    <td>{{ rate.updated_at.isoformat() }}</td>
-  </tr>
-{% endfor %}
+<table border="1">
+  <thead>
+      <tr>
+          <th>From currency</th>
+          <th>To currency</th>
+          <th>Rate</th>
+          <th>Date</th>
+      </tr>
+  </thead>
+  <tbody>
+      {% for rate in exchange_rates %}
+      <tr>
+          <td>{{ rate.from_currency.value }}</td>
+          <td>{{ rate.to_currency.value }}</td>
+          <td>{{ rate.rate }}</td>
+          <td>{{ rate.updated_at.isoformat() }}</td>
+      </tr>
+      {% endfor %}
+  </tbody>
+</table>

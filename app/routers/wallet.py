@@ -1,8 +1,8 @@
-from fastapi import APIRouter, Body, Depends, Query, Path
+from fastapi import APIRouter, Body, Depends, Query, Path, Request
 from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
 from app.database import get_db
-from app.dependencies import auth
+from app.dependencies import auth, templates
 from app.schemas.wallet import CreateWalletSchema, GetWalletListSchema, UpdateWalletBalanceSchema, UpdateWalletSchema
 import app.services.wallet as wallet_service
 
@@ -13,20 +13,16 @@ wallet_router = APIRouter(
 
 @wallet_router.get("/list")
 def get_list(
+    request: Request,
     params: GetWalletListSchema = Query(),
     db: Session = Depends(get_db),
     decoded_token: dict = Depends(auth)
 ):
     wallets = wallet_service.get_list(db, params, decoded_token)
-    wallets = list(map(lambda wallet: {
-        "id": wallet.id,
-        "name": wallet.name,
-        "currency": wallet.currency.value,
-        "balance": wallet.balance,
-        "created_at": wallet.created_at.isoformat(),
-        "updated_at": wallet.updated_at.isoformat(),
-    }, wallets))
-    return JSONResponse(content={"list": wallets})
+    return templates.TemplateResponse("wallet/list.html", {
+        "request": request,
+        "wallets": wallets
+    })
 
 @wallet_router.get("/item/{id}")
 def get_item(
