@@ -56,7 +56,8 @@ export const TransactionsPage = () => {
   return (
     <>
       <div className="transactions-container">
-        <Button onClick={() => setOpen(true)}>New Transaction</Button>
+          <Button onClick={() => setOpen(true)}>New Transaction</Button>
+          
         <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
       </div>
       <Modal
