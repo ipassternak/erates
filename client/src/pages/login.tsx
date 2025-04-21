@@ -22,13 +22,8 @@ export const LoginPage = () => {
         password,
       }),
     })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.success) {
-          navigate("/");
-        } else {
-          alert("Error: " + data.message);
-        }
+      .then(() => {
+        navigate("/");
       })
       .catch((error) => console.error(error))
       .finally(() => setIsLoading(false));

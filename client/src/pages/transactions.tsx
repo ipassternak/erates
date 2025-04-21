@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import DOMPurify from "dompurify";
+import { useCallback, useEffect, useState } from "react";
 import { Button, Form, InputNumber, Modal, Select } from "antd";
 import { API_URL, currencyOptions } from "../const";
 
@@ -15,17 +14,42 @@ export const TransactionsPage = () => {
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
 
-  useEffect(() => {
+  const fetchTransactions = useCallback(() => {
     fetch(`${API_URL}/transactions/list`, {
       method: "GET",
       credentials: "include",
     })
       .then((response) => response.text())
       .then((html) => {
-        setHtmlContent(DOMPurify.sanitize(html));
+        setHtmlContent(html);
         setLoading(false);
       });
   }, []);
+
+  useEffect(() => {
+    fetchTransactions();
+  }, [fetchTransactions]);
+
+  const createTransaction = (values: TransactionFormValues) => {
+    fetch(`${API_URL}/transactions/item`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify({
+        from_wallet_id: values.fromWallet,
+        to_wallet_id: values.toWallet,
+        amount: values.amount,
+        exchange_rate_id: String(values.exchangeRate),
+      }),
+    })
+      .then(() => {
+        setOpen(false);
+        fetchTransactions();
+      })
+      .catch((error) => console.error(error));
+  };
 
   if (loading) return <div>Loading transactions...</div>;
 
@@ -44,7 +68,7 @@ export const TransactionsPage = () => {
       >
         <Form<TransactionFormValues>
           layout="vertical"
-          onFinish={(values) => console.log(values)}
+          onFinish={createTransaction}
         >
           <Form.Item<TransactionFormValues>
             label="Exchange Rate"

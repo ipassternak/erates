@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import DOMPurify from "dompurify";
+import { useCallback, useEffect, useState } from "react";
 import { Button, Form, Input, Modal, Select } from "antd";
 import { API_URL, currencyOptions } from "../const";
 
@@ -13,21 +12,37 @@ export const WalletsPage = () => {
   const [loading, setLoading] = useState(true);
   const [open, setOpen] = useState(false);
 
-  useEffect(() => {
+  const fetchWallets = useCallback(() => {
     fetch(`${API_URL}/wallets/list`, {
       method: "GET",
       credentials: "include",
     })
       .then((response) => response.text())
       .then((html) => {
-        setHtmlContent(DOMPurify.sanitize(html));
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.error("Error fetching wallets:", error);
+        setHtmlContent(html);
         setLoading(false);
       });
   }, []);
+
+  useEffect(() => {
+    fetchWallets();
+  }, [fetchWallets]);
+
+  const createWallet = (values: WalletFormValues) => {
+    fetch(`${API_URL}/wallets/item`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify(values),
+    })
+      .then(() => {
+        setOpen(false);
+        fetchWallets();
+      })
+      .catch((error) => console.error(error));
+  };
 
   if (loading) return <div>Loading wallets...</div>;
 
@@ -44,10 +59,7 @@ export const WalletsPage = () => {
         onClose={() => setOpen(false)}
         onCancel={() => setOpen(false)}
       >
-        <Form<WalletFormValues>
-          layout="vertical"
-          onFinish={(values) => console.log(values)}
-        >
+        <Form<WalletFormValues> layout="vertical" onFinish={createWallet}>
           <Form.Item<WalletFormValues>
             label="Wallet Name"
             name="name"

@@ -16,18 +16,15 @@ export const RegisterPage = () => {
       headers: {
         "Content-Type": "application/json",
       },
+      credentials: "include",
       body: JSON.stringify({
+        full_name: "Alex",
         email,
         password,
       }),
     })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.success) {
-          navigate("/login");
-        } else {
-          alert("Error: " + data.message);
-        }
+      .then(() => {
+        navigate("/login");
       })
       .catch((error) => console.error(error))
       .finally(() => setIsLoading(false));
