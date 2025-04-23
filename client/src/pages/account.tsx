@@ -54,12 +54,11 @@ export const AccountPage = () => {
     );
   }
 
-  // At this point, TypeScript knows apiResponse must be UserData
   return (
     <div className="account-page">
       <h1>Name: {apiResponse.item.full_name}</h1>
       <p>Email: {apiResponse.item.email}</p>
-      <p>Member since: {apiResponse.item.role}</p>
+      <p>Role: {apiResponse.item.role}</p>
     </div>
   );
 };

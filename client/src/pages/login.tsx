@@ -23,7 +23,7 @@ export const LoginPage = () => {
       }),
     })
       .then(() => {
-        navigate("/");
+        navigate("/account");
       })
       .catch((error) => console.error(error))
       .finally(() => setIsLoading(false));

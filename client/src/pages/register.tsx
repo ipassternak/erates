@@ -3,6 +3,7 @@ import { API_URL } from "../const";
 import { useState } from "react";
 
 export const RegisterPage = () => {
+  const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -18,7 +19,7 @@ export const RegisterPage = () => {
       },
       credentials: "include",
       body: JSON.stringify({
-        full_name: "Alex",
+        full_name: fullName,
         email,
         password,
       }),
@@ -39,13 +40,19 @@ export const RegisterPage = () => {
         <form onSubmit={handleSubmit}>
           <input
             type="text"
-            placeholder="email"
+            placeholder="Full name"
+            value={fullName}
+            onChange={(e) => setFullName(e.target.value)}
+          />
+          <input
+            type="text"
+            placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
           <input
             type="text"
-            placeholder="password"
+            placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
