@@ -35,6 +35,28 @@ async def get_list(
         }, transactions)),
     })
 
+@transaction_router.get("/reference")
+async def get_reference(
+    params: GetTransactionListSchema = Query(),
+    db: Session = Depends(get_db),
+    decoded_token: dict = Depends(auth),
+):
+    transactions = transaction_service.get_list(db, params, decoded_token)
+    return JSONResponse(content={
+        "transactions": list(map(lambda transaction: {
+            "id": transaction.id,
+            "from_wallet_id": transaction.from_wallet_id,
+            "to_wallet_id": transaction.to_wallet_id,
+            "exchange_rate_id": transaction.exchange_rate_id,
+            "from_currency": transaction.from_currency.value,
+            "to_currency": transaction.to_currency.value,
+            "from_amount": transaction.from_amount,
+            "to_amount": transaction.to_amount,
+            "created_at": transaction.created_at.isoformat(),
+            "updated_at": transaction.updated_at.isoformat(),
+        }, transactions)),
+    })
+
 @transaction_router.post("/item")
 async def create_item(
     data: CreateTransactionSchema = Body(),

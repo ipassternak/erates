@@ -6,7 +6,6 @@
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 20px;
             color: #333;
         }
         h1 {
@@ -46,10 +45,6 @@
     <table>
         <thead>
             <tr>
-                <th>ID</th>
-                <th>From Wallet</th>
-                <th>To Wallet</th>
-                <th>Exchange Rate ID</th>
                 <th>From Currency</th>
                 <th>From Amount</th>
                 <th>To Currency</th>
@@ -61,10 +56,6 @@
         <tbody>
             {% for transaction in transactions %}
             <tr>
-                <td>{{ transaction.id }}</td>
-                <td>{{ transaction.from_wallet_id }}</td>
-                <td>{{ transaction.to_wallet_id }}</td>
-                <td>{{ transaction.exchange_rate_id }}</td>
                 <td>{{ transaction.from_currency }}</td>
                 <td class="amount">{{ transaction.from_amount }}</td>
                 <td>{{ transaction.to_currency }}</td>

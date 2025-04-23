@@ -30,6 +30,23 @@ def get_list(
         }, exchange_rates)),
     })
 
+@exchange_rate_router.get("/reference")
+def get_reference(
+    params: GetExchangeRateListSchema = Query(),
+    db: Session = Depends(get_db),
+):
+    exchange_rates = exchange_rate_service.get_list(db, params)
+    return JSONResponse(content={
+        "exchange_rates": list(map(lambda exchange_rate: {
+            "id": exchange_rate.id,
+            "from_currency": exchange_rate.from_currency.value,
+            "to_currency": exchange_rate.to_currency.value,
+            "rate": exchange_rate.rate,
+            "created_at": exchange_rate.created_at.isoformat(),
+            "updated_at": exchange_rate.updated_at.isoformat(),
+        }, exchange_rates)),
+    })
+
 @exchange_rate_router.get("/item/{id}")
 def get_item(
     id: str = Path(description="Exchange rate ID"),

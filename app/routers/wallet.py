@@ -31,6 +31,24 @@ def get_list(
         }, wallets)),
     })
 
+@wallet_router.get("/reference")
+def get_reference(
+    params: GetWalletListSchema = Query(),
+    db: Session = Depends(get_db),
+    decoded_token: dict = Depends(auth)
+):
+    wallets = wallet_service.get_list(db, params, decoded_token)
+    return JSONResponse(content={
+        "wallets": list(map(lambda wallet: {
+            "id": wallet.id,
+            "name": wallet.name,
+            "currency": wallet.currency.value,
+            "balance": wallet.balance,
+            "created_at": wallet.created_at.isoformat(),
+            "updated_at": wallet.updated_at.isoformat(),
+        }, wallets)),
+    })
+
 @wallet_router.get("/item/{id}")
 def get_item(
     id: str = Path(description="Wallet ID"),
